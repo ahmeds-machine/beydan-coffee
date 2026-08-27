@@ -9,7 +9,7 @@ import { LocationsRail, RailItem } from "@/components/locations-rail";
 import { HeroGallery } from "@/components/hero-gallery";
 import { AmbientVideo } from "@/components/ambient-video";
 import { PhotoCarousel } from "@/components/photo-carousel";
-import { ProductCard } from "@/components/product-card";
+import { SignatureCoverflow } from "@/components/signature-coverflow";
 import { LineReveal, Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 import { LOCATIONS, TOTAL_STORE_COUNT } from "@/data/locations";
 import { SIGNATURE_ITEMS } from "@/data/menu";
@@ -95,14 +95,25 @@ export default function HomePage() {
     { src: "/videos/story-counter.mp4", type: "video/mp4" },
   ] as const;
 
-  const signatureItems = SIGNATURE_ITEMS.map((item) => ({
-    ...item,
-    media: resolveMedia(
-      `product-${item.slug}`,
-      `${item.name} at Beydan Coffee`,
-      `${item.name} — close-up product shot`,
-    ),
-  }));
+  // Titles are set on two lines in the coverflow, so the last word drops to a
+  // smaller second line: "Iced Matcha / Latte". Single-word names keep one.
+  const signatureItems = SIGNATURE_ITEMS.map((item) => {
+    const words = item.name.toUpperCase().split(" ");
+    const titleLine2 = words.length > 1 ? words.pop() : undefined;
+
+    return {
+      key: item.slug,
+      titleLine1: words.join(" "),
+      titleLine2,
+      ctaText: "View menu",
+      ctaUrl: "/menu",
+      media: resolveMedia(
+        `product-${item.slug}`,
+        `${item.name} at Beydan Coffee`,
+        `${item.name} — close-up product shot`,
+      ),
+    };
+  });
 
   const numbersGallery = NUMBERS_GALLERY.map((photo) => ({
     ...resolveMedia(photo.name, `${photo.shot}, Beydan Coffee`, photo.shot),
@@ -264,17 +275,12 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          <RevealGroup
-            as="ul"
-            className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
-            stagger={0.09}
-          >
-            {signatureItems.map((item) => (
-              <RevealItem as="li" key={item.slug} className="h-full">
-                <ProductCard item={item} />
-              </RevealItem>
-            ))}
-          </RevealGroup>
+          <Reveal className="mt-14" distance={26}>
+            <SignatureCoverflow
+              items={signatureItems}
+              sectionLabel="Signature offerings"
+            />
+          </Reveal>
         </div>
       </Band>
 
