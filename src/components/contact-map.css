@@ -1,0 +1,240 @@
+/* ==========================================================================
+   Contact map — Leaflet chrome restyled into the site's language.
+   Default OSM tiles and Leaflet's square white controls read as an embedded
+   third-party widget; this grades the tiles warm and rebuilds the controls as
+   circular buttons so the map sits inside the design rather than beside it.
+   ========================================================================== */
+
+.beydan-map {
+  background: var(--beydan-bone-deep);
+  font-family: var(--font-sans);
+  z-index: 0; /* keep Leaflet's panes under the site header */
+}
+
+/* Grade the tiles only. Filtering the whole container would wash out the
+   crimson pins and the popup text along with the map. */
+.beydan-map .leaflet-tile-pane {
+  filter: sepia(16%) saturate(76%) hue-rotate(-8deg) brightness(1.03)
+    contrast(0.94);
+}
+
+/* --- Zoom controls: the site's circular button, not Leaflet's square one --- */
+
+.beydan-map .leaflet-control-zoom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px;
+  border: none;
+  box-shadow: none;
+}
+
+.beydan-map .leaflet-control-zoom a,
+.beydan-map .leaflet-control-zoom a:hover {
+  width: 44px;
+  height: 44px;
+  line-height: 42px;
+  border: 1px solid var(--beydan-bone-line);
+  border-radius: 9999px;
+  background: var(--beydan-bone);
+  color: var(--beydan-ink);
+  font-size: 1.25rem;
+  font-weight: 600;
+  box-shadow: 0 14px 28px -20px rgba(36, 30, 23, 0.85);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.beydan-map .leaflet-control-zoom a:hover {
+  background: var(--beydan-crimson);
+  border-color: var(--beydan-crimson);
+  color: #fff;
+}
+
+.beydan-map .leaflet-control-zoom a:active {
+  transform: scale(0.95);
+}
+
+.beydan-map .leaflet-control-zoom a.leaflet-disabled,
+.beydan-map .leaflet-control-zoom a.leaflet-disabled:hover {
+  background: var(--beydan-bone-deep);
+  color: color-mix(in srgb, var(--beydan-ink) 30%, transparent);
+  border-color: var(--beydan-bone-line);
+  cursor: not-allowed;
+}
+
+.beydan-map .leaflet-control-zoom a:focus-visible {
+  outline: 2px solid var(--beydan-crimson);
+  outline-offset: 3px;
+}
+
+/* --- Attribution: required by OSM, kept legible but quiet ---------------- */
+
+.beydan-map .leaflet-control-attribution {
+  padding: 3px 10px;
+  border-radius: 9999px 0 0 0;
+  background: color-mix(in srgb, var(--beydan-bone) 90%, transparent);
+  color: var(--beydan-ink-soft);
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+}
+
+.beydan-map .leaflet-control-attribution a {
+  color: var(--beydan-crimson);
+}
+
+/* --- Markers ------------------------------------------------------------- */
+
+.beydan-map .beydan-pin {
+  /* The count badge sits proud of the icon box. */
+  overflow: visible;
+  transition: transform 0.2s ease;
+}
+
+.beydan-map .beydan-pin:focus-visible {
+  outline: 2px solid var(--beydan-crimson);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.beydan-map .beydan-pin:hover {
+  transform: translateY(-2px);
+}
+
+.beydan-pin__mark {
+  position: relative;
+  display: block;
+  /* Lifts the mark off the tiles without altering the artwork itself. */
+  filter: drop-shadow(0 6px 8px rgba(23, 20, 15, 0.45));
+}
+
+.beydan-pin__mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Only rendered where a pin stands for more than one café. */
+.beydan-pin__count {
+  position: absolute;
+  top: -7px;
+  right: -9px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border: 1.5px solid var(--beydan-bone);
+  border-radius: 9999px;
+  background: var(--beydan-ink);
+  color: var(--beydan-bone);
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beydan-map .beydan-pin,
+  .beydan-map .leaflet-control-zoom a {
+    transition: none;
+  }
+  .beydan-map .beydan-pin:hover {
+    transform: none;
+  }
+}
+
+/* --- Popups -------------------------------------------------------------- */
+
+.beydan-map .leaflet-popup-content-wrapper {
+  border-radius: 18px;
+  background: var(--beydan-bone);
+  color: var(--beydan-ink);
+  box-shadow: 0 30px 60px -40px rgba(36, 30, 23, 0.95);
+}
+
+.beydan-map .leaflet-popup-tip {
+  background: var(--beydan-bone);
+}
+
+.beydan-map .leaflet-popup-content {
+  margin: 16px 18px;
+  width: 208px !important;
+  font-family: var(--font-sans);
+}
+
+.beydan-map .leaflet-popup-close-button {
+  width: 30px;
+  height: 30px;
+  top: 8px;
+  right: 8px;
+  color: var(--beydan-ink-soft);
+  font-size: 1.25rem;
+}
+
+.beydan-map .leaflet-popup-close-button:hover {
+  color: var(--beydan-crimson);
+  background: transparent;
+}
+
+.beydan-popup__eyebrow {
+  margin: 0;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--beydan-crimson);
+}
+
+.beydan-popup__count {
+  margin: 4px 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--beydan-ink);
+}
+
+/* Mogadishu lists nine cafés — scroll inside the popup rather than letting it
+   grow past the map. */
+.beydan-popup__list {
+  margin: 0;
+  padding: 0 4px 0 0;
+  list-style: none;
+  max-height: 168px;
+  overflow-y: auto;
+  border-top: 1px solid var(--beydan-bone-line);
+}
+
+.beydan-popup__list li + li {
+  border-top: 1px solid var(--beydan-bone-line);
+}
+
+.beydan-popup__list a {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--beydan-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.beydan-popup__list a:hover {
+  color: var(--beydan-crimson);
+}
+
+.beydan-popup__list a:focus-visible {
+  outline: 2px solid var(--beydan-crimson);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.beydan-popup__soon {
+  font-weight: 500;
+  color: var(--beydan-ink-soft);
+}

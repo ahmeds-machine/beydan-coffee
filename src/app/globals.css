@@ -1,26 +1,387 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* ==========================================================================
+   BEYDAN COFFEE — DESIGN TOKENS
+   Palette sampled directly from the live beydancoffee site screenshots
+   (see README "Colour provenance"). Full saturation, not muted.
+   ========================================================================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Brand: crimson / oxblood ------------------------------------------ */
+  --beydan-crimson: #ab2733;      /* sampled: every filled CTA on the live site */
+  --beydan-crimson-logo: #ad2329; /* sampled: the BEYDAN wordmark */
+  --beydan-crimson-lift: #c2303e; /* hover lift */
+  --beydan-oxblood: #7e1b25;      /* pressed / deep field */
+  --beydan-oxblood-deep: #5a121a;
+
+  /* --- Dark bands: espresso / timber ------------------------------------- */
+  --beydan-espresso: #16120f;
+  --beydan-espresso-raised: #1f1a15;
+  --beydan-timber: #2b231b;
+  --beydan-timber-line: #3a2f25;
+
+  /* --- Warmth: amber, sampled from the product photography backdrops ----- */
+  --beydan-amber: #e9a05a;
+  --beydan-amber-soft: #ffb76b;   /* sampled: product card backdrop */
+  --beydan-amber-deep: #b9702f;
+
+  /* --- Light bands: bone / cream ----------------------------------------- */
+  --beydan-bone: #faf6ef;
+  --beydan-bone-deep: #f1e9dc;
+  --beydan-bone-line: #e2d7c6;
+
+  /* --- Text -------------------------------------------------------------- */
+  --beydan-ink: #241e17;          /* warm charcoal on light */
+  --beydan-ink-soft: #5c5044;
+  --beydan-cream: #f7efe6;        /* off-white on dark */
+  --beydan-cream-soft: #c3b5a4;
+
+  /* --- Status ------------------------------------------------------------ */
+  --beydan-open: #2f7d55;
+  --beydan-open-on-dark: #6fcf97;
+  --beydan-soon: #9a5a17;
+  --beydan-soon-on-dark: #e0a458;
+  --beydan-shut: #6b6259;
+  --beydan-shut-on-dark: #9a8c7d;
+
+  /* --- Geometry ----------------------------------------------------------- */
+  --radius: 0.75rem;
+  --rake-angle: 112deg;           /* matches the lean of the slashes in the BEYDAN mark */
+
+  /* --- Semantic surface (re-mapped inside dark bands) -------------------- */
+  --background: var(--beydan-bone);
+  --foreground: var(--beydan-ink);
+  --card: #ffffff;
+  --card-foreground: var(--beydan-ink);
+  --popover: var(--beydan-bone);
+  --popover-foreground: var(--beydan-ink);
+  --primary: var(--beydan-crimson);
+  --primary-foreground: #ffffff;
+  --secondary: var(--beydan-bone-deep);
+  --secondary-foreground: var(--beydan-ink);
+  --muted: var(--beydan-bone-deep);
+  --muted-foreground: var(--beydan-ink-soft);
+  --accent: var(--beydan-bone-deep);
+  --accent-foreground: var(--beydan-ink);
+  --destructive: var(--beydan-crimson);
+  --border: var(--beydan-bone-line);
+  --input: var(--beydan-bone-line);
+  --ring: var(--beydan-crimson);
+}
+
+/* Dark bands are a structural device, not a user theme: any subtree marked
+   [data-band="dark"] re-points the semantic tokens so shadcn primitives
+   (Badge, Tabs, Dialog) inherit the espresso palette automatically. */
+[data-band="dark"] {
+  --background: var(--beydan-espresso);
+  --foreground: var(--beydan-cream);
+  --card: var(--beydan-espresso-raised);
+  --card-foreground: var(--beydan-cream);
+  --popover: var(--beydan-espresso-raised);
+  --popover-foreground: var(--beydan-cream);
+  --primary: var(--beydan-crimson);
+  --primary-foreground: #ffffff;
+  --secondary: var(--beydan-timber);
+  --secondary-foreground: var(--beydan-cream);
+  --muted: var(--beydan-timber);
+  --muted-foreground: var(--beydan-cream-soft);
+  --accent: var(--beydan-timber);
+  --accent-foreground: var(--beydan-cream);
+  --border: var(--beydan-timber-line);
+  --input: var(--beydan-timber-line);
+  --ring: var(--beydan-amber);
 }
 
 @theme inline {
+  --font-display: var(--font-fraunces), "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-crimson: var(--beydan-crimson);
+  --color-crimson-lift: var(--beydan-crimson-lift);
+  --color-oxblood: var(--beydan-oxblood);
+  --color-oxblood-deep: var(--beydan-oxblood-deep);
+  --color-espresso: var(--beydan-espresso);
+  --color-espresso-raised: var(--beydan-espresso-raised);
+  --color-timber: var(--beydan-timber);
+  --color-timber-line: var(--beydan-timber-line);
+  --color-amber: var(--beydan-amber);
+  --color-amber-soft: var(--beydan-amber-soft);
+  --color-amber-deep: var(--beydan-amber-deep);
+  --color-bone: var(--beydan-bone);
+  --color-bone-deep: var(--beydan-bone-deep);
+  --color-bone-line: var(--beydan-bone-line);
+  --color-ink: var(--beydan-ink);
+  --color-ink-soft: var(--beydan-ink-soft);
+  --color-cream: var(--beydan-cream);
+  --color-cream-soft: var(--beydan-cream-soft);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.75);
+  --radius-4xl: calc(var(--radius) * 3.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Focus ring follows the band: crimson on bone (6.35:1), amber on espresso
+     (8.55:1). A single fixed colour could not clear 3:1 on both. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--beydan-crimson);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   TYPE SCALE
+   Editorial-maximalist: the display face is set far larger than a typical
+   marketing hero, at a tight line-height, and is the dominant visual element.
+   ========================================================================== */
+
+@utility display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.9rem, 8.4vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.032em;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 0, "WONK" 1, "opsz" 144;
+}
+
+@utility display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.2vw, 4.35rem);
+  line-height: 1.0;
+  letter-spacing: -0.026em;
+  font-weight: 600;
+  font-variation-settings: "SOFT" 0, "WONK" 1, "opsz" 100;
+}
+
+@utility display-3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.9vw, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-variation-settings: "opsz" 60;
+}
+
+@utility display-4 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+  font-variation-settings: "opsz" 40;
+}
+
+/* Oversized numerals for stat / date rows. Tabular so columns align. */
+@utility numeral {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-variation-settings: "opsz" 144;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@utility body-lg {
+  font-size: clamp(1.02rem, 1.15vw, 1.18rem);
+  line-height: 1.62;
+  letter-spacing: -0.003em;
+}
+
+@utility body-base {
+  font-size: 0.975rem;
+  line-height: 1.66;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+@utility shell {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4.5vw, 4.5rem);
+}
+
+@utility band-pad {
+  padding-block: clamp(4.5rem, 8.5vw, 9rem);
+}
+
+/* ==========================================================================
+   THE RAKE — signature motif
+   Three angled slashes lifted from the geometry of the BEYDAN mark. Used as
+   the band divider, the active menu-tab indicator, and the circle-button
+   hover sweep. It is a derived graphic device, never a wordmark lockup.
+   ========================================================================== */
+
+@utility rake {
+  background-image: repeating-linear-gradient(
+    var(--rake-angle),
+    var(--beydan-crimson) 0 3px,
+    transparent 3px 9px,
+    var(--beydan-amber) 9px 12px,
+    transparent 12px 22px
+  );
+}
+
+/* Three clean slashes. Sized so whole bands fit the box rather than
+   fragmenting into noise at small heights. */
+@utility rake-rule {
+  height: 0.75rem;
+  background-image: repeating-linear-gradient(
+    var(--rake-angle),
+    currentColor 0 2px,
+    transparent 2px 7px
+  );
+  opacity: 0.85;
+}
+
+/* Grain: keeps the big flat espresso and bone fields from reading as plastic. */
+@utility grain {
+  position: relative;
+}
+@utility grain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   MOTION
+   Every looping animation is disabled under prefers-reduced-motion; only
+   opacity transitions survive.
+   ========================================================================== */
+
+@keyframes beydan-steam {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8%, 0) scaleX(0.9);
+  }
+  18% {
+    opacity: var(--steam-peak, 0.5);
+  }
+  70% {
+    opacity: calc(var(--steam-peak, 0.5) * 0.45);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--steam-drift, 10px), -125%, 0) scaleX(1.35);
+  }
+}
+
+@keyframes beydan-shimmer {
+  0% {
+    transform: translate3d(-120%, 0, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(240%, 0, 0) rotate(8deg);
+  }
+}
+
+@keyframes beydan-livepulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 currentColor;
+    opacity: 1;
+  }
+  60% {
+    box-shadow: 0 0 0 6px transparent;
+    opacity: 0.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Horizontal rails: snap scrolling with the scrollbar tucked away. */
+@utility rail {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(1.25rem, 4.5vw, 4.5rem);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+@utility rail-hide-bar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
