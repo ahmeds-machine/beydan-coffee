@@ -1,14 +1,15 @@
 /**
- * Menu — the full published line-up, 10 categories and 65 items.
+ * Menu — the full published line-up, 10 categories and 68 items.
  *
  * Item names are transcribed from Beydan's own menu, including its spellings
- * ("Safron Rose Latte") and its category naming ("Tea & Chocolate" carries no
- * chocolate item). Nothing here is invented.
+ * ("Safron Rose Latte"). Nothing here is invented.
  *
  * KNOWN GAPS — see README:
- *  - [NEEDS CONTENT: photography] No item photograph has been supplied, so
- *    every card renders the placeholder. Drop `public/images/product-<slug>`
- *    into place and it is picked up on the next build.
+ *  - [NEEDS CONTENT: photography] Every drink has been photographed. The 22
+ *    food items — Cakes, Desserts, and Salads & Sandwiches — have not, and
+ *    those cards still render the placeholder. Drop
+ *    `public/images/product-<slug>` into place and it is picked up on the
+ *    next build.
  *  - [NEEDS CONTENT: prices] No prices are published, and the cards are
  *    name-only by design, so none is shown — not even a placeholder.
  *  - [NEEDS CONTENT: dietary data] Vegan / dairy-free / gluten-free data is
@@ -139,6 +140,9 @@ export const MENU: readonly MenuCategory[] = [
       { slug: "somali-tea", name: "Somali Tea", hot: true },
       { slug: "spanish-tea", name: "Spanish Tea", hot: true },
       { slug: "masala-tea", name: "Masala Tea", hot: true },
+      { slug: "camel-milk-tea", name: "Camel Milk Tea", hot: true },
+      { slug: "hot-chocolate", name: "Hot Chocolate", hot: true },
+      { slug: "qaxwo-somali", name: "Qaxwo Somali", hot: true },
     ],
   },
   {
