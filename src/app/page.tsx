@@ -72,6 +72,20 @@ const HERO_PANELS = [
   },
 ] as const;
 
+/**
+ * Photography for the Signature Offerings carousel.
+ *
+ * Prefers a `signature-<slug>` file so this carousel can hold a different
+ * photograph from the menu card for the same item, and falls back to the
+ * shared `product-<slug>` when there is no override.
+ */
+function signatureMedia(slug: string, name: string) {
+  const alt = `${name} at Beydan Coffee`;
+  const subject = `${name} — close-up product shot`;
+  const override = resolveMedia(`signature-${slug}`, alt, subject);
+  return override.src ? override : resolveMedia(`product-${slug}`, alt, subject);
+}
+
 export default function HomePage() {
   const heroPanels = HERO_PANELS.map((panel) => {
     const media = resolveMedia(panel.name, panel.alt, panel.subject);
@@ -107,11 +121,11 @@ export default function HomePage() {
       titleLine2,
       ctaText: "View menu",
       ctaUrl: "/menu",
-      media: resolveMedia(
-        `product-${item.slug}`,
-        `${item.name} at Beydan Coffee`,
-        `${item.name} — close-up product shot`,
-      ),
+      // An item can carry a different photograph here than on the menu page:
+      // a `signature-<slug>` file wins when one exists, and the shared
+      // `product-<slug>` is used otherwise. Both once read the same file, so
+      // swapping a menu card's photo silently changed this carousel too.
+      media: signatureMedia(item.slug, item.name),
     };
   });
 

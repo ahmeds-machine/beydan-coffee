@@ -4,7 +4,6 @@ import { Band, Eyebrow } from "@/components/band";
 import { Cta, CtaRow } from "@/components/cta";
 import { MediaFrame } from "@/components/media-frame";
 import { MenuExplorer, type MenuCategoryView } from "@/components/menu-explorer";
-import { Parallax } from "@/components/parallax";
 import { LineReveal, Reveal } from "@/components/reveal";
 import { MENU } from "@/data/menu";
 import { MENU_HERO } from "@/data/site";
@@ -74,15 +73,18 @@ export default async function MenuPage({
         </div>
 
         <div className="shell mt-14">
+          {/*
+            No Parallax: that wrapper drove a scroll-linked translateY, which
+            made this hero slide as the page scrolled. Imagery on this site
+            sits still.
+          */}
           <Reveal distance={30}>
-            <Parallax distance={24}>
-              <MediaFrame
-                media={heroMedia}
-                priority
-                sizes="(min-width: 1440px) 1200px, 92vw"
-                className="aspect-[16/9] rounded-t-3xl lg:aspect-[21/9]"
-              />
-            </Parallax>
+            <MediaFrame
+              media={heroMedia}
+              priority
+              sizes="(min-width: 1440px) 1200px, 92vw"
+              className="aspect-[16/9] rounded-t-3xl lg:aspect-[21/9]"
+            />
           </Reveal>
         </div>
       </Band>

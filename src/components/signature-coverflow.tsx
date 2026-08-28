@@ -189,10 +189,19 @@ export function SignatureCoverflow({
                 isCentre ? "cursor-default" : "cursor-pointer",
               )}
             >
+              {/*
+                `sizes` has to describe the pixels the image actually needs,
+                not the width of the box. Filling this tall card with a
+                landscape photo scales it up until its *height* fits, so a
+                1.8:1 source needs roughly 900px of width to stay sharp in a
+                330px-wide frame. Asking for 330 here served a 330px file and
+                let the browser upscale it almost 3x, which is what made the
+                wider photographs look soft.
+              */}
               <MediaFrame
                 media={item.media}
                 tone="espresso"
-                sizes="330px"
+                sizes="900px"
                 className="absolute inset-0"
               />
 
