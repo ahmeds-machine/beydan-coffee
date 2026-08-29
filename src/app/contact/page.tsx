@@ -129,23 +129,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </Reveal>
-
-            <Reveal delay={0.15}>
-              <p className="body-base mt-6 rounded-2xl border border-dashed border-bone-line p-6 text-ink-soft">
-                <span className="eyebrow text-crimson">Needs content</span>
-                <span className="mt-3 block">
-                  One pin per city, positioned on an approximate city centre —
-                  these are not surveyed café positions. Geocode each address
-                  and fill in <code>coordinates</code> in{" "}
-                  <code>src/data/locations.ts</code> to drop real per-café pins
-                  and sharpen every &ldquo;Get directions&rdquo; link. The pin
-                  artwork is a recreation of Beydan&rsquo;s map submark made
-                  from a screenshot, not the original file — swap{" "}
-                  <code>public/markers/beydan-b-mark.svg</code> when the client
-                  supplies it.
-                </span>
-              </p>
-            </Reveal>
           </div>
         </div>
       </Band>

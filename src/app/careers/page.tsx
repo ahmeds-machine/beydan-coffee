@@ -143,16 +143,6 @@ export default function CareersPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <p className="body-base mt-6 rounded-2xl border border-dashed border-bone-line p-6 text-ink-soft">
-                <span className="eyebrow text-crimson">Needs content</span>
-                <span className="mt-3 block">
-                  If Beydan runs a dedicated careers inbox or an applicant form,
-                  swap the address above for it. Open roles are not listed
-                  anywhere on the current site, so none are shown here.
-                </span>
-              </p>
-            </Reveal>
           </div>
         </div>
       </Band>

@@ -201,17 +201,6 @@ export default function AboutPage() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.15}>
-              <div className="mt-10 rounded-2xl border border-dashed border-bone-line bg-bone p-7">
-                <p className="eyebrow text-crimson">Needs content</p>
-                <p className="body-base mt-3 max-w-prose text-ink-soft">
-                  Beydan has not published its origin regions, farm partners,
-                  altitudes, roast profiles or tasting notes. Rather than invent
-                  a farm-to-cup story, this section stays at the level the brand
-                  itself states. Supply the sourcing detail and it slots in here.
-                </p>
-              </div>
-            </Reveal>
 
             <CtaRow className="mt-10">
               <Cta href="/menu" arrow="right">

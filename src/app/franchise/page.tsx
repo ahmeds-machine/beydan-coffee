@@ -119,17 +119,6 @@ export default function FranchisePage() {
             ))}
           </RevealGroup>
 
-          <Reveal className="mt-10">
-            <p className="body-base max-w-prose rounded-2xl border border-dashed border-bone-line p-6 text-ink-soft">
-              <span className="eyebrow text-crimson">Drafted copy</span>
-              <span className="mt-3 block">
-                The live site truncates each pillar mid-sentence. The opening of
-                every paragraph above is reproduced verbatim; the closing clause
-                was written for this rebuild in Beydan&rsquo;s voice and is not
-                sourced. See <code>src/data/site.ts</code>.
-              </span>
-            </p>
-          </Reveal>
         </div>
       </Band>
 
