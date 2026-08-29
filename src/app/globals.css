@@ -150,9 +150,18 @@
     border-color: var(--border);
   }
 
+  /* The full-bleed rails lay their cards out past the viewport and scroll
+     internally. Clipping on `body` alone is not enough: `html` stays
+     `visible`, so the viewport never clips, the initial containing block
+     widens to the full content, and every `position: fixed` child — the
+     header — is sized against that instead of the viewport. On a phone that
+     pushed the menu button clean off the right edge. Clip on `html` too.
+     `clip` rather than `hidden` so neither element becomes a scroll
+     container and the page cannot be panned sideways. */
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   body {
@@ -162,7 +171,7 @@
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Focus ring follows the band: crimson on bone (6.35:1), amber on espresso
